@@ -1,4 +1,4 @@
 # npm --version
 # docker --version
-# mvn -v
-nodejs -v
+ mvn -v
+# nodejs -v
