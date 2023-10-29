@@ -1,32 +1,33 @@
-
+def gv
 pipeline {
     agent any
-    parameters {
-        choice(name: 'VERSION', choices: ['1.0', '2.0', '3.0'], description: 'Select version')
-        booleanParam(name: 'executeTests', defaultValue: true, description: 'Enable feature')
+    tools{
+        maven 'Maven'
     }
+    
         
     stages {
-        stage("build") {
+        stage("init") {
             steps {
-                echo "build the application"
-            }
-        }
-        stage("test") {
-            when{
-                expression {
-                    params.executeTests
+                script{
+                    gv = load "script.groovy'
                 }
             }
+        }
+        stage("buildJar") {
             steps {
-                echo "test the application"
+               script{
+                   gv.buildJar()
+               }
             }
         }
-        stage("deploy") {
+        stage("buildImage") {
             steps {
-                echo "deploy the application"
-                echo "deploy version {$params.VERSION}"
+                script{
+                 gv.buildImage()   
+                }
             }
         }
+        
     }   
 }
